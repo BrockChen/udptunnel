@@ -31,9 +31,16 @@
 #include <utun/util.h>
 #include <utun/tunnel_packet.h>
 
-#define PASSPHRASE v[3]
+extern char* g_password;
+extern char* g_remoteip;
+extern char* g_tunname;
+extern char* g_net;
+extern char* g_remoteport;
 
-int main(int c, char **v)
+#define PASSPHRASE g_password
+
+//int client(int c, char **v)
+int client()
 {
 	struct sockaddr_in server_addr, from;
 	socklen_t fromlen;
@@ -47,19 +54,20 @@ int main(int c, char **v)
 
 	tp = (struct tunnel_packet *)buf;
 
-	if(c < 4) {
-		printf("TCP/UDP/ICMP Tunnel over UDP\n"
-			"%s <ip address> <port> <passphrase>\n", v[0]);
-		return 0;
-	}
+	// if(c < 4) {
+	// 	printf("TCP/UDP/ICMP Tunnel over UDP\n"
+	// 		"%s <ip address> <port> <passphrase>\n", v[0]);
+	// 	return 0;
+	// }
 
-	server_addr.sin_addr.s_addr = inet_addr(v[1]);
-	if(strtoport(v[2], &server_addr.sin_port) == 0) {
-		printf("%s: Invalid port\n", v[0]);
+	//server_addr.sin_addr.s_addr = inet_addr(v[1]);
+	server_addr.sin_addr.s_addr = inet_addr(g_remoteip);
+	if(strtoport(g_remoteport, &server_addr.sin_port) == 0) {
+		printf("%s: Invalid port\n", g_remoteport);
 		return 1;
 	}
 	server_addr.sin_family = AF_INET;
-	tun_fd = tun_create();
+	tun_fd = tun_create(g_tunname);
 	server_fd = socket_create(0);
 
 	/* Sending authentication */
@@ -82,9 +90,9 @@ int main(int c, char **v)
 	}
 
 #ifdef __linux__
-	exec_script("linux_client.sh", v[1]);
+	exec_script("linux_client.sh", g_tunname, g_net);
 #else
-	exec_script("osx_client.sh", v[1]);
+	exec_script("osx_client.sh", g_tunname, g_net);
 #endif
 	puts("+ Auth is OK.\n+ UDP Tunnel is running.");
 	FD_ZERO(&rfds);

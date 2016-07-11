@@ -30,9 +30,17 @@
 #include <utun/util.h>
 #include <utun/tunnel_packet.h>
 
-#define PASSPHRASE v[2]
+#define PASSPHRASE g_password
 
-int main(int c, char **v)
+
+extern char* g_password;
+extern char* g_remoteip;
+extern char* g_tunname;
+extern char* g_net;
+extern char* g_remoteport;
+
+
+int server()
 {
 	struct sockaddr_in client_addr, from;
 	socklen_t fromlen;
@@ -48,27 +56,27 @@ int main(int c, char **v)
 	unsigned int pass_len;
 
 	tp = (struct tunnel_packet *)buf;
-	
-	if(c < 3) {
-		printf( "UDP Tunnel\n"
-			"%s <port> <passphrase>\n", v[0]);
-		return 0;
-	}
 
-	if(strtoport(v[1], &local_port) == 0) {
-		printf("%s: Invalid port\n", v[0]);
+	// if(c < 3) {
+	// 	printf( "UDP Tunnel\n"
+	// 		"%s <port> <passphrase>\n", v[0]);
+	// 	return 0;
+	// }
+
+	if(strtoport(g_remoteport, &local_port) == 0) {
+		printf("%s: Invalid port\n", g_remoteport);
 		return 1;
 	}
 	
 	pass_len = strlen(PASSPHRASE);
-	tun_fd = tun_create();
+	tun_fd = tun_create(g_tunname);
 	client_fd = socket_create(local_port);
 	fromlen = sizeof(from);
 
 #ifdef __linux__
-        exec_script("linux_server.sh", v[1]);
+        exec_script("linux_server.sh", g_tunname, g_net);
 #else
-        exec_script("osx_server.sh", v[1]);
+        exec_script("osx_server.sh", g_tunname, g_net);
 #endif
 	
 	FD_ZERO(&rfds);

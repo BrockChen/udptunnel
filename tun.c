@@ -39,7 +39,7 @@ static const char device_name[] = "/dev/net/tun";
 static const char device_name[] = "/dev/tun0";
 #endif
 
-int tun_create()
+int tun_create(char*ifname)
 {
 	int fd;
 
@@ -51,7 +51,7 @@ int tun_create()
 	struct ifreq ifr;
 	memset(&ifr, 0, sizeof(ifr));
 	ifr.ifr_flags = IFF_TUN|IFF_NO_PI;
-	strncpy(ifr.ifr_name, "tun0", IFNAMSIZ);
+	strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	if(ioctl(fd, TUNSETIFF, (void *)&ifr) == -1) {
 		perror("perror");
 		exit(1);
