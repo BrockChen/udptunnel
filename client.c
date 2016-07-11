@@ -30,12 +30,7 @@
 #include <utun/tun.h>
 #include <utun/util.h>
 #include <utun/tunnel_packet.h>
-
-extern char* g_password;
-extern char* g_remoteip;
-extern char* g_tunname;
-extern char* g_net;
-extern char* g_remoteport;
+#include <utun/conf.h>
 
 #define PASSPHRASE g_password
 
@@ -90,9 +85,9 @@ int client()
 	}
 
 #ifdef __linux__
-	exec_script("linux_client.sh", g_tunname, g_net);
+	exec_script("linux_client.sh", g_tunname, g_net, g_dev);
 #else
-	exec_script("osx_client.sh", g_tunname, g_net);
+	exec_script("osx_client.sh", g_tunname, g_net, g_dev);
 #endif
 	puts("+ Auth is OK.\n+ UDP Tunnel is running.");
 	FD_ZERO(&rfds);

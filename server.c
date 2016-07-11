@@ -76,9 +76,9 @@ int server()
 	fromlen = sizeof(from);
 
 #ifdef __linux__
-        exec_script("linux_server.sh", g_tunname, g_net);
+        exec_script("linux_server.sh", g_tunname, g_net, g_dev);
 #else
-        exec_script("osx_server.sh", g_tunname, g_net);
+        exec_script("osx_server.sh", g_tunname, g_net, g_dev);
 #endif
 	
 	FD_ZERO(&rfds);

@@ -7,7 +7,7 @@
 #define UTIL_H
 
 int mstrtoport(char *str, unsigned short *out);
-void exec_script(const char *name, const char *arg, const char *arg2);
+void exec_script(const char *name, const char *arg, const char *arg2, const char *arg3);
 
 #endif
 
