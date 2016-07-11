@@ -21,5 +21,10 @@
 #define CONF_H
 
 #define MTU 1500
-
+char g_password[20];
+char g_remoteip[20];
+char g_tunname[20];
+char g_net[20];
+char g_remoteport[8];
+char g_dev[8];
 #endif

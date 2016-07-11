@@ -6,7 +6,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-int strtoport(char *str, unsigned short *out);
+int mstrtoport(char *str, unsigned short *out);
 void exec_script(const char *name, const char *arg, const char *arg2);
 
 #endif

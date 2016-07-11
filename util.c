@@ -27,9 +27,9 @@
 int strtoport(char *str, unsigned short *out)
 {
 	char *err;
-
+	printf("--%s--\n", str);
 	*out = htons((unsigned short)strtoul(str, &err, 10));
-
+	//*out = htons((unsigned short)atoi(str));
 	return *err == 0;
 }
 

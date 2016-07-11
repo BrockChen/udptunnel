@@ -1,7 +1,7 @@
 INCLUDE = -I./include
-CC = gcc
+CC = gcc -g 
 #CC = /home/felipe/Sources/OpenWrt-SDK-brcm47xx-2.6-for-Linux-i686/staging_dir_mipsel/bin/mipsel-linux-gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -g 
 
 all: socket.o tun.o util.o client.o server.o main.o
 	$(CC) socket.o tun.o util.o client.o server.o main.o -o mtunnel

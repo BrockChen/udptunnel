@@ -29,16 +29,17 @@
 #include <utun/tun.h>
 #include <utun/util.h>
 #include <utun/tunnel_packet.h>
+#include <utun/conf.h>
 
 #define PASSPHRASE g_password
 
-
-extern char* g_password;
-extern char* g_remoteip;
-extern char* g_tunname;
-extern char* g_net;
-extern char* g_remoteport;
-
+/*
+char* g_password;
+char* g_remoteip;
+char* g_tunname;
+char* g_net;
+char* g_remoteport;
+*/
 
 int server()
 {
@@ -62,7 +63,8 @@ int server()
 	// 		"%s <port> <passphrase>\n", v[0]);
 	// 	return 0;
 	// }
-
+	printf("eeee\n");
+	printf("%s--\n", g_net);
 	if(strtoport(g_remoteport, &local_port) == 0) {
 		printf("%s: Invalid port\n", g_remoteport);
 		return 1;

@@ -1,4 +1,5 @@
 #!/bin/sh
-
-ifconfig tun0 10.0.0.2 pointopoint 10.0.0.1 mtu 1400 up
+ifn=$1
+net=$2
+ifconfig ${ifn} ${net}.2 pointopoint ${net}.1 mtu 1400 up
 echo $*
