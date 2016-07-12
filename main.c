@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     BZERO(g_remoteport);
     BZERO(g_dev);
     //BZERO(g_others);    
-    while((i = getopt(argc, argv, "hP:p:c:i:n:")) != -1) {
+    while((i = getopt(argc, argv, "hP:p:c:i:n:d:")) != -1) {
         switch(i) {
             case 'h': usage();
             case 'p': strcpy(g_password, optarg); cnt = cnt+2; break;
